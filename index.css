@@ -29,10 +29,18 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.22);
 }
 
+#myForm input.error {
+  border: 1px solid red;
+}
+
 #myForm input:focus {
   outline: none;
   border-color: rgba(94,76,2,.42);
   box-shadow: 0 0 6px 2px rgba(255,204,0,.7), 0 1px 0 rgba(255,255,255,.2), inset 0 1px 1px rgba(0,0,0,.1);
+}
+
+#myForm input.error:focus {
+  box-shadow: 0 0 6px 2px rgba(255,0,0,.7), 0 1px 0 rgba(255,255,255,.2), inset 0 1px 1px rgba(0,0,0,.1);
 }
 
 #myForm button {
@@ -50,6 +58,11 @@ body {
 
 #myForm button:hover {
   background: linear-gradient(rgba(255,204,0,.7), rgba(255,204,0,.5) );
+}
+
+#myForm button:disabled {
+  background: rgba(130, 100, 0, 1);
+  cursor: not-allowed;
 }
 
 #myForm #resultContainer {

@@ -8,23 +8,23 @@
   </head>
   <body>
 
-    <form id="myForm">
+    <form id="myForm" action="./responses/progress.json">
       <div class="control">
         <label for="fio">ФИО</label>
-        <input type="text" name="fio" id="fio" />
+        <input type="text" name="fio" id="fio" placeholder="Иванов Иван Иванович" />
       </div>
 
       <div class="control">
         <label for="email">Email</label>
-        <input type="text" name="email" id="email" />
+        <input type="text" name="email" id="email" placeholder="ivanov@yandex.ru" />
       </div>
 
       <div class="control">
         <label for="phone">Телефон</label>
-        <input type="text" name="phone" id="phone" />
+        <input type="text" name="phone" id="phone" placeholder="+7(999)999-99-99" />
       </div>
 
-      <button onclick="event.preventDefault(); alert('Тут пока ничего не работает')" type="submit" id="submitButton">Отправить</button>
+      <button onclick="MyForm.submit(event)" type="submit" id="submitButton">Отправить</button>
 
       <div id="resultContainer"></div>
     </form>
