@@ -3,8 +3,32 @@
   <head>
     <meta charset="utf-8">
     <title>Тестовое задание для школы Node.js Яндекса</title>
+
+    <link rel="stylesheet" type="text/css" href="./index.css" />
   </head>
   <body>
-    
+
+    <form id="myForm">
+      <div class="control">
+        <label for="fio">ФИО</label>
+        <input type="text" name="fio" id="fio" />
+      </div>
+
+      <div class="control">
+        <label for="email">Email</label>
+        <input type="text" name="email" id="email" />
+      </div>
+
+      <div class="control">
+        <label for="phone">Телефон</label>
+        <input type="text" name="phone" id="phone" />
+      </div>
+
+      <button onclick="event.preventDefault(); alert('Тут пока ничего не работает')" type="submit" id="submitButton">Отправить</button>
+
+      <div id="resultContainer"></div>
+    </form>
+
+    <script src="./index.js"></script>
   </body>
 </html>
