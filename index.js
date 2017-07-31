@@ -76,15 +76,17 @@ const MyForm = {
     validate: function(){
       const data = this.getData();
       const errorFields = [];
+      let re;
 
       //Валидация fio
       //Количество слов = 3
-      let isFioValid = data.fio.split(' ').length === 3; //TODO validate only words without digits
+      re = /^[А-Я-]+\s[А-Я-]+\s[А-Я-]+$/igm;
+      let isFioValid = re.test(data.fio);
       if(!isFioValid) errorFields.push('fio');
 
       //Валидация email
       //Regexp + валидация разрешённых доменов
-      var re = /[A-Z0-9._%+-]+@[A-Z]+.[A-Z]{2,3}/igm;
+      re = /[A-Z0-9._%+-]+@[A-Z]+.[A-Z]{2,3}/igm;
       const acceptDomains = ['ya.ru', 'yandex.ru', 'yandex.ua', 'yandex.by', 'yandex.kz', 'yandex.com'];
       let isEmailValid = re.test(data.email) && ( acceptDomains.indexOf( data.email.split('@')[1] ) !== -1 );
       if(!isEmailValid) errorFields.push('email');
@@ -92,7 +94,7 @@ const MyForm = {
       //Валидация phone
       //Regexp + сумма всех цифр должна быть не больше 30
       let isPhoneValid = false;
-      var re = /\+7\([0-9]{3}\)[0-9]{3}\-[0-9]{2}\-[0-9]{2}/igm;
+      re = /\+7\([0-9]{3}\)[0-9]{3}\-[0-9]{2}\-[0-9]{2}/igm;
       if(re.test(data.phone)){
         phoneSum = data.phone.match(/[0-9]/g).reduce(function(sum, current){
           return parseInt(sum) + parseInt(current);
