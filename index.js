@@ -58,7 +58,7 @@ const MyForm = {
                 resultContainer.className = 'error';
                 break;
               case 'progress':
-                resultContainer.innerHTML = "Progress...";
+                resultContainer.innerHTML = '';
                 resultContainer.className = 'progress';
                 setTimeout(this.sendRequest.bind(this), response.timeout);
                 break;
