@@ -1,3 +1,5 @@
+"use strict";
+
 const MyForm = {
 
     /**
@@ -13,13 +15,13 @@ const MyForm = {
       const fields = form.getElementsByTagName('input');
 
       //Удаляем красные рамки ошибок у всех инпутов
-      for (field of fields) {
+      for (let field of fields) {
         field.classList.remove('error');
       }
 
       if(!validation.isValid){
         //Добавляем красные рамки полям с ошибками
-        for (field of validation.errorFields) {
+        for (let field of validation.errorFields) {
           document.getElementsByName(field)[0].classList.add('error');
         }
       } else {
@@ -96,7 +98,7 @@ const MyForm = {
       let isPhoneValid = false;
       re = /\+7\([0-9]{3}\)[0-9]{3}\-[0-9]{2}\-[0-9]{2}/igm;
       if(re.test(data.phone)){
-        phoneSum = data.phone.match(/[0-9]/g).reduce(function(sum, current){
+        let phoneSum = data.phone.match(/[0-9]/g).reduce(function(sum, current){
           return parseInt(sum) + parseInt(current);
         });
         isPhoneValid = phoneSum <= 30;
@@ -134,7 +136,7 @@ const MyForm = {
       const fields = form.getElementsByTagName('input');
       const data = {};
 
-      for (field of fields) {
+      for (let field of fields) {
         data[field.name] = field.value.trim();
       }
 
