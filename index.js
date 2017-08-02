@@ -1,6 +1,44 @@
 "use strict";
 
+/**
+ * Объект формы MyForm
+ * @type {Object}
+ */
 const MyForm = {
+
+    /**
+     * Регулярки для валидации
+     * @type {Object}
+     */
+    re: {
+      fio: /^[А-ЯA-Z-]+\s[А-ЯA-Z-]+\s[А-ЯA-Z-]+$/i,
+      email: /^[A-Z0-9._%+-]+@[A-Z]+.[A-Z]{2,3}$/i,
+      phone: /^\+7\([0-9]{3}\)[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/i
+    },
+
+    /**
+     * Доступные доменные зоны для Email
+     * @type {Array}
+     */
+    acceptEmailDomains: [
+      'ya.ru',
+      'yandex.ru',
+      'yandex.ua',
+      'yandex.by',
+      'yandex.kz',
+      'yandex.com'
+    ],
+
+    /**
+     * Поля разрешённые для динамического заполнения
+     * с помощью метода setData(data)
+     * @type {Array}
+     */
+    fillableFields: [
+      'fio',
+      'email',
+      'phone'
+    ],
 
     /**
      * Выполняет валидацию полей и отправку ajax-запроса,
@@ -30,7 +68,6 @@ const MyForm = {
 
         //Отправляем запрос на сервер
         this.sendRequest();
-
       }
     },
 
@@ -78,26 +115,24 @@ const MyForm = {
     validate: function(){
       const data = this.getData();
       const errorFields = [];
-      let re;
 
       //Валидация fio
       //Количество слов = 3
-      re = /^[А-ЯA-Z-]+\s[А-ЯA-Z-]+\s[А-ЯA-Z-]+$/igm;
-      let isFioValid = re.test(data.fio);
+      let isFioValid = this.re.fio.test(data.fio);
       if(!isFioValid) errorFields.push('fio');
 
       //Валидация email
       //Regexp + валидация разрешённых доменов
-      re = /^[A-Z0-9._%+-]+@[A-Z]+.[A-Z]{2,3}$/igm;
-      const acceptDomains = ['ya.ru', 'yandex.ru', 'yandex.ua', 'yandex.by', 'yandex.kz', 'yandex.com'];
-      let isEmailValid = re.test(data.email) && ( acceptDomains.indexOf( data.email.split('@')[1] ) !== -1 );
+      let isEmailValid = false;
+      if( this.re.email.test( data.email ) ){
+        isEmailValid = this.acceptEmailDomains.indexOf( data.email.split('@')[1] ) !== -1 ;
+      }
       if(!isEmailValid) errorFields.push('email');
 
       //Валидация phone
       //Regexp + сумма всех цифр должна быть не больше 30
       let isPhoneValid = false;
-      re = /^\+7\([0-9]{3}\)[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/igm;
-      if(re.test(data.phone)){
+      if(this.re.phone.test(data.phone)){
         let phoneSum = data.phone.match(/[0-9]/g).reduce(function(sum, current){
           return parseInt(sum) + parseInt(current);
         });
@@ -119,9 +154,8 @@ const MyForm = {
       const form = document.getElementById('myForm');
       const fields = form.getElementsByTagName('input');
 
-      const acceptFields = ['fio', 'email', 'phone'];
       for (var fieldName in data) {
-        if (data.hasOwnProperty(fieldName) && acceptFields.indexOf(fieldName) !== -1) {
+        if (data.hasOwnProperty(fieldName) && this.fillableFields.indexOf(fieldName) !== -1) {
           fields[fieldName].value = data[fieldName];
         }
       }
